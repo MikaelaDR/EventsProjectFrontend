@@ -1,11 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './Home';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Registration from './pages/Registration';
+import Event from './pages/Event';
+import AddEvent from './modals/AddEvent';
 
 function App() {
   return (
-    <div className="App">
+    <div >
       <Home/>
+      {/* <Registration/> */}
+      {/* <Login/> */}
+      <Event/>
+
+      {/* <AddEvent/> */}
     </div>
   );
 }

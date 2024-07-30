@@ -1,11 +1,12 @@
 import React, {useState, useEffect, StyleSheet} from 'react';
 
+
 function Footer(){
 
 
     return(
         <div style={styles.main}>
-            <div style={styles.alignRow}>
+            {/* <div style={styles.alignRow}> */}
                 {/* Humber Address */}
                 <div style={styles.alignRow}>
                     <div style={styles.alignColumn}>
@@ -24,15 +25,19 @@ function Footer(){
                     </div>
                 </div>
                 {/* Logos */}
-                <div>
+                <div style={styles.logo}>
                     <a href="Home" ><img style={styles.logo} src="./images/logos/LogoPhraseGrey.png" alt="Humber Events Logo" /></a>
                 </div>
 
                 {/* Icons */}
-                <div>
-                    <p>/[ICONS HERE/]</p>
+                <div style={styles.iconDiv}>
+                    
+                    <a href="https://x.com/humbercollege?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" ><img style={styles.icon} src="./images/icons/twitter_icon.png" alt="Twitter icon" /></a>
+                    <a href="https://www.facebook.com/humbercollege/" ><img style={styles.icon} src="./images/icons/fb_icon.png" alt="Facebook icon" /></a>
+                    <a href="https://www.instagram.com/humbercollege/" ><img style={styles.icon} src="./images/icons/insta_icon.png" alt="Instagram icon" /></a>
+                    <a href="https://www.tiktok.com/@humbercollege?lang=en" ><img style={styles.icon} src="./images/icons/tiktok_icon.png" alt="Tiktok icon" /></a>
                 </div>
-            </div>
+            {/* </div> */}
 
         </div>
     )
@@ -42,11 +47,13 @@ export default Footer
 
 let styles = {
     main:{
-        display: 'row',
-        flexDirection:'column',
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent:'center',
         backgroundColor: '#777B89',
         width:'100%',
-        color: 'white'
+        color: 'white',
+        fontSize:'2vh'
     },
 
     links:{
@@ -55,15 +62,18 @@ let styles = {
     },
 
     logo:{
+        flex:1,
         width: '40%'
     },
 
     alignRow:{
         display:'flex',
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent:'space-between',
         marginLeft: '2vh',
         marginRight: '1vh',
+        flex:1,
     },
 
     alignColumn:{
@@ -73,6 +83,21 @@ let styles = {
         textAlign: 'left',
         marginLeft: '2vh',
         marginRight: '1vh',
+        flex:1
 
+    },
+    iconDiv:{
+        flex:0.5,
+        alignContent:'center',
+        alinItems:'center',
+        // backgroundColor:'red',
+        
+    },
+
+    icon:{
+        width:'10%',
+        margin:'1.5vh',
+        
+        
     }
 }
