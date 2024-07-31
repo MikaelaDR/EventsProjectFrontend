@@ -1,6 +1,31 @@
+/**
+ * NOTE:
+ * - Get backend error message if login is unsuccessful? 
+ */
+import { useState } from "react"
 import Footer from "../components/Footer"
+import { useNavigate } from "react-router-dom"
 
 function Login(){
+    const navigate = useNavigate()
+    const [errorMessage, setErrorMessage] = useState('')
+    const [username, setUsername] = useState()
+    const [password, setPassword] = useState()
+    const [isLoggedIn] = useState(False)
+
+    // Function on button press (error messages, login status, )
+    // const attempLogin()=>{
+    //     if (password=='' && username=='' ) {
+    //         setErrorMessage('You must enter your password and username.')  
+    //     }else if (password==''){
+    //         setErrorMessage('You must enter your password.')  
+    //     }else if (username=''){
+    //         setErrorMessage('You must enter your username.')  
+    //     }else{
+    //         isLoggedIn = True
+    //         navigate('/')
+    //     }
+    // }
 
 
     return(
@@ -23,17 +48,17 @@ function Login(){
                             <div>
                                 <input style={styles.inputs} type="password" placeholder="Password"/>
                             </div>
-                            <div style ={styles.button1div}><a href="Login" style={styles.button1}>Register</a></div>
+                            <div style ={styles.button1div}><a href="# if successful home /" style={styles.button1}>Login</a></div>
                             <div style ={styles.loginDiv} >
                                 <p style ={styles.text}>Don't have an account? </p> 
-                                <a href="Login" style ={styles.loginLink}> Register Here</a>
+                                <a href="/Registration" style ={styles.loginLink}> Register Here</a>
                             </div>
                         </form>
                     </div>
 
                     <div style={styles.section2}>
                         <div style={styles.img}>
-                            <a href="Home" ><img src="./images/loginPic.png" alt="Humber Events Logo" /></a>
+                            <a href="/" ><img src="./images/loginPic.png" alt="Humber Events Logo" /></a>
                         </div>
                     </div>
                 
@@ -66,13 +91,13 @@ let styles = {
     },
     
     mainSub:{
-        margin:'8vh',
+        margin:'20vh',
         display:'flex',
         flexDirection:'row',
         
         border: 'white 2vh solid',
         borderRadius:'5vh',
-        // height:'80%'
+        // height:'80%',
         wrap:'flex-wrap'
     },
 

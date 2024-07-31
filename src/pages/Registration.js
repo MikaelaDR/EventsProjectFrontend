@@ -16,7 +16,7 @@ function Registration(){
                     <div style={styles.section1}>
                         {/* Logo */}
                         <div>
-                            <a href="Home" ><img style={styles.logo} src="./images/logos/LogoPhraseBlue.png" alt="Humber Events Logo" /></a>
+                            <a href="/" ><img style={styles.logo} src="./images/logos/LogoPhraseBlue.png" alt="Humber Events Logo" /></a>
                         </div>
                         {/* Title */}
                         <div style={styles.titleContainer}>
@@ -47,10 +47,10 @@ function Registration(){
                             
                             </div>
                             {/* Button */}
-                            <div style ={styles.button1div}><a href="Login" style={styles.button1}>Register</a></div>
+                            <div style ={styles.button1div}><a href="# if successful/Login" style={styles.button1}>Register</a></div>
                             <div style ={styles.loginDiv} >
                                 <p style ={styles.text}>Already have an account? </p> 
-                                <a href="Login" style ={styles.loginLink}> Login Here</a>
+                                <a href="/Login" style ={styles.loginLink}> Login Here</a>
                             </div>
                         </form>
                     </div>
@@ -82,7 +82,7 @@ let styles = {
         color: 'white'
     },
     mainContainer:{
-        backgroundColor: '#14234B',
+        backgroundColor: '#D5AA30',
         display:'flex',
         justifyContent:'center',
         width:'100%'

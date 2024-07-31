@@ -18,24 +18,24 @@ function Footer(){
 
                     {/* Links */}
                     <div style={styles.alignColumn}>
-                    <a href="Events" style={styles.links}>Home</a>
-                    <a href="Events" style={styles.links}>Events</a>
-                    <a href="Events" style={styles.links}>My Account</a>
-                    <a href="Events" style={styles.links}>Logout</a>
+                    <a href="/" style={styles.links}>Home</a>
+                    <a href="/Events" style={styles.links}>Events</a>
+                    <a href="/Dashboard" style={styles.links}>My Dashboard</a>
+                    <a href="/Login" style={styles.links}>Logout</a>
                     </div>
                 </div>
                 {/* Logos */}
                 <div style={styles.logo}>
-                    <a href="Home" ><img style={styles.logo} src="./images/logos/LogoPhraseGrey.png" alt="Humber Events Logo" /></a>
+                    <a href="/" ><img style={styles.logo} src="./images/logos/LogoPhraseGrey.png" alt="Humber Events Logo" /></a>
                 </div>
 
                 {/* Icons */}
                 <div style={styles.iconDiv}>
                     
-                    <a href="https://x.com/humbercollege?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" ><img style={styles.icon} src="./images/icons/twitter_icon.png" alt="Twitter icon" /></a>
-                    <a href="https://www.facebook.com/humbercollege/" ><img style={styles.icon} src="./images/icons/fb_icon.png" alt="Facebook icon" /></a>
-                    <a href="https://www.instagram.com/humbercollege/" ><img style={styles.icon} src="./images/icons/insta_icon.png" alt="Instagram icon" /></a>
-                    <a href="https://www.tiktok.com/@humbercollege?lang=en" ><img style={styles.icon} src="./images/icons/tiktok_icon.png" alt="Tiktok icon" /></a>
+                    <a target="_blank" href="https://x.com/humbercollege?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" ><img style={styles.icon} src="./images/icons/twitter_icon.png" alt="Twitter icon" /></a>
+                    <a target="_blank" href="https://www.facebook.com/humbercollege/" ><img style={styles.icon} src="./images/icons/fb_icon.png" alt="Facebook icon" /></a>
+                    <a target="_blank" href="https://www.instagram.com/humbercollege/" ><img style={styles.icon} src="./images/icons/insta_icon.png" alt="Instagram icon" /></a>
+                    <a target="_blank" href="https://www.tiktok.com/@humbercollege?lang=en" ><img style={styles.icon} src="./images/icons/tiktok_icon.png" alt="Tiktok icon" /></a>
                 </div>
             {/* </div> */}
 

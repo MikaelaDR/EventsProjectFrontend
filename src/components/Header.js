@@ -1,4 +1,5 @@
 import React, {useState, useEffect, StyleSheet} from 'react';
+import { Link } from 'react-router-dom';
 
 function Header(){
 
@@ -8,19 +9,19 @@ function Header(){
                 <div style={styles.menuContainer}>
                     <div style={styles.menuPart1}>
                         
-                        <div><a href="Home" ><img style={styles.logo} src="./images/logos/LogoCropped.png" alt="Humber Events Logo" /></a></div>
+                        <div><a href="/" ><img style={styles.logo} src="./images/logos/LogoCropped.png" alt="Humber Events Logo" /></a></div>
                         <div style={styles.menuPart2}>
-                            <th><a href="Home" style={styles.links}>Home</a></th>
-                            <th><a href="Events" style={styles.links}>Events</a></th>
-                            <th> <a href="Dashboard" style={styles.links}>My Dashboard</a></th>
+                            <th><a href="/" style={styles.links}>Home</a></th>
+                            <th><a href="/Events" style={styles.links}>Events</a></th>
+                            <th> <a href="/Dashboard" style={styles.links}>My Dashboard</a></th>
                         </div>
                     </div>
                     
                     
                     <div style={styles.menuPart3}>
                         <div >
-                            <th><a href="Login" style={styles.links}>Login</a></th>
-                            <th><a href="Register" style={styles.registerButton}>Get Started</a></th>
+                            <th><a href="/Login" style={styles.links}>Login</a></th>
+                            <th><a href="/Registration" style={styles.registerButton}>Get Started</a></th>
                         </div>
                     </div>
                 </div>
