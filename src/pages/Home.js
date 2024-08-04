@@ -17,7 +17,7 @@ function Home(){
                     <h3 style={styles.subtitle}>Where Connections Happen.</h3>
                 </div>
                 <img style={styles.img1} src="./images/groupOutdoors.jpg" alt="Students outdoors on campus talking" />
-                <div style ={styles.button1div}><a href="Events" style={styles.button1}>Connect</a></div>
+                <div style ={styles.button1div}><a href="events" style={styles.button1}>Connect</a></div>
             </div>
 
             <div style={styles.dividerYellow}/>
@@ -39,7 +39,7 @@ function Home(){
                 
 
             </div>
-            <div style ={styles.button1div}><a href="Events" style={styles.button1}>Upcoming Events</a></div>
+            <div style ={styles.button1div}><a href="events" style={styles.button1}>Upcoming Events</a></div>
             <div style={styles.dividerWhite}/>
 
             <Footer/>

@@ -11,21 +11,21 @@ function Login(){
     const [errorMessage, setErrorMessage] = useState('')
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
-    const [isLoggedIn] = useState(False)
+    const [isLoggedIn] = useState(false)
 
     // Function on button press (error messages, login status, )
-    // const attempLogin()=>{
-    //     if (password=='' && username=='' ) {
-    //         setErrorMessage('You must enter your password and username.')  
-    //     }else if (password==''){
-    //         setErrorMessage('You must enter your password.')  
-    //     }else if (username=''){
-    //         setErrorMessage('You must enter your username.')  
-    //     }else{
-    //         isLoggedIn = True
-    //         navigate('/')
-    //     }
-    // }
+    const attempLogin=()=>{
+        if (password=='' && username=='' ) {
+            setErrorMessage('You must enter your password and username.')  
+        }else if (password==''){
+            setErrorMessage('You must enter your password.')  
+        }else if (username=''){
+            setErrorMessage('You must enter your username.')  
+        }else{
+            isLoggedIn = true
+            navigate('/')
+        }
+    }
 
 
     return(

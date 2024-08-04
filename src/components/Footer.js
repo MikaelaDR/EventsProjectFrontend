@@ -63,7 +63,7 @@ let styles = {
 
     logo:{
         flex:1,
-        width: '40%'
+        width: '30%'
     },
 
     alignRow:{

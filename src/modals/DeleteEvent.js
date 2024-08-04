@@ -1,56 +1,38 @@
-import React, {useState} from "react";
-import "../App.css";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
 
-function AddEvent(){
+
+function DeleteEvent(){
     const [show, setShow] = useState(false);
 
     return(
         <div>
             {/* Button */}
-            
-            <div style={styles.button1} 
-                onClick={() => setShow(true)}
-                >
-                    Add New Event +
-            </div>
-            
+            <div onClick={() => setShow(true)} className="me-2"><FontAwesomeIcon icon={faTrash} size='3x' style={{color: "white", height:'4vh', paddingRight:'2vh'}} /></div>
+
             {/* Modal */}
+            
             <Modal
                 show={show}
                 onHide={() => setShow(false)}
-                size='xl'
+                size='mm'
                 centered='True'
                 dialogClassName="modal-90w"
-                aria-labelledby="example-custom-modal-styling-title"
+                aria-labelledby="example-modal-sizes-title-sm"
             >
             <Modal.Header closeButton>
-            <Modal.Title as='h1'>
-                Add Event
-            </Modal.Title>
+            <Modal.Title as='h3' centered="True">
+                Are you sure you want to delete this event?
+            </Modal.Title >
             </Modal.Header>
             <Modal.Body>
-                <form>
-                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between' }}>
-                        <input style={styles.inputs} placeholder="Event Name"/>
-                        <input style={styles.inputs} placeholder="Event Location"/>
-                        <input style={styles.inputs} type='date' placeholder="Date"/>
-                    </div>
-                    <div style={{display:'flex', flexDirection:'row' }}>
-                        <p style={{fontSize:'2vh'}}>Start Time:</p><input style={styles.inputs} type='time' placeholder="Start Time"/>
-                        <p style={{fontSize:'2vh'}}>End Time:</p><input style={styles.inputs} type='time' placeholder="End Time"/>
-                    </div>
-                    <div>
-                        <textarea style={styles.inputs} type='' placeholder="Description"/>
-                    </div>
-                    <div>
-                        <input style={styles.inputs} type="file" placeholder="Image"/>
-                    </div>
-                    <div style ={styles.button1div}><a href="Add" style={styles.button2}>Add</a></div>
-                </form>
+                    
+                    <div style ={styles.button1div}><a href="Add" style={styles.button2}>Yes, delete event.</a></div>
+                    <div style ={styles.button1div}><p style={styles.button2}>Cancel</p></div>
+                
             </Modal.Body>
         </Modal>
 
@@ -59,7 +41,7 @@ function AddEvent(){
     )
 }
 
-export default AddEvent;
+export default DeleteEvent;
 
 let styles = {
     modal:{
