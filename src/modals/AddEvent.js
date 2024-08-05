@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import "../App.css";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+
 import Modal from 'react-bootstrap/Modal';
 
 
@@ -10,7 +9,7 @@ function AddEvent(){
 
     return(
         <div>
-            {/* Button */}
+            {/* Add New Event Button */}
             
             <div style={styles.button1} 
                 onClick={() => setShow(true)}
@@ -18,7 +17,7 @@ function AddEvent(){
                     Add New Event +
             </div>
             
-            {/* Modal */}
+            {/* Add Event Modal */}
             <Modal
                 show={show}
                 onHide={() => setShow(false)}

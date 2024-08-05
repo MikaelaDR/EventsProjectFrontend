@@ -6,18 +6,11 @@ import AddEvent from '../modals/AddEvent';
 import UpdateEvent from '../modals/UpdateEvent';
 import DeleteEvent from '../modals/DeleteEvent'
 import Accordion from 'react-bootstrap/Accordion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
 
 
 function Event(){
-
-    //TRASH DELETE EVENT FUNCTION
-    // const deleteConfirmation()=>{
-        
-    // }
 
 
     // ACCORDION FUNCTION, MAPPING EVENTS
@@ -25,7 +18,7 @@ function Event(){
         const [events, setEvents] =useState([]);
 
 
-        // FETCHES DATA - Saw this on the internet, don't know if it works
+        //Fetches events data from backend, saving it to events array in frontend
         useEffect(() => {
             fetch('http://localhost:8080/api/events')
               .then(response => response.json())
@@ -33,8 +26,9 @@ function Event(){
               .catch(error => console.error('Error fetching events:', error));
           }, []);
 
-        //   Tests if ternary operator is working: pushes a fake event, which shows accordion
-          events.push("event#1")
+
+        //Tests if ternary operator is working: pushes a fake event, which shows accordion
+        //events.push("event#1")
         
         return (
             <>
@@ -52,8 +46,8 @@ function Event(){
                             <div><p style={styles.accHeaderDate}>{event.date} Date</p></div>
                         </div>
                         <div style={{display:'flex', flexDirection: 'row', justifyContent:'flex-end', width:'100%'}}>
-                            <UpdateEvent/>
-                            <DeleteEvent/>
+                            <UpdateEvent eventID={event.id}/>
+                            <DeleteEvent eventID={event.id} />
                         </div>
                     </div>
                     </Accordion.Header>
@@ -103,19 +97,13 @@ function Event(){
                     <h1 style={styles.title}>EVENTS</h1>
                 </div>
                 <div style={{display:'flex', justifyContent:'flex-end', marginRight:'5vh'}}><AddEvent/></div>
-                
-
                 <div style={styles.dividerYellow}/>
             </div>
-
             
             <div style={{display:'flex', justifyContent:'center'}}>
             {/* Section 2 */}
             <div style={styles.section2}>
                 <AllCollapseExample/>
-                
-              
-                
 
             </div></div>
 

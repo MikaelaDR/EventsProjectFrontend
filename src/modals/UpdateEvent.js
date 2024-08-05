@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "../App.css";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,15 +7,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 
-function UpdateEvent(){
+function UpdateEvent(props){
     const [show, setShow] = useState(false);
+    const [event, setEvent] = useState({})
+
+    //Fetches events data from backend, saving it to events array in frontend
+    useEffect(() => {
+        fetch('http://localhost:8080/api/events')
+          .then(response => response.json())
+          .then(data => setEvent(data))
+          .catch(error => console.error('Error fetching events:', error));
+      }, []);
+
+    //Connects to Update API in backend using axios -GIVING ERROR MESSAGE
+    // const handleUpdate = (id) => {
+    //     axios.put('http://localhost:8080/api/events/' +id)
+    //     .then(result => {
+    //         console.log(res);
+    //         console.log(res.data);
+    //     })
+    //     .catch(err => console.log(err))
+    // }
 
     return(
         <div>
-            {/* Button */}
+            {/* Edit Button */}
             <div onClick={() => setShow(true)}><FontAwesomeIcon icon={faPenToSquare} size='3x' style={{color: "white", height:'4vh', paddingRight:'2vh'}} /></div>
 
-            {/* Modal */}
+            {/*Update Modal */}
             
             <Modal
                 show={show}
@@ -47,11 +66,12 @@ function UpdateEvent(){
                     <div>
                         <input style={styles.inputs} type="file" placeholder="Image"/>
                     </div>
-                    <div style ={styles.button1div}><a href="Add" style={styles.button2}>Add</a></div>
+                    <div style ={styles.button1div}  /* onClick={()=>handleUpdate(props.eventID)}*/><a href="Add" style={styles.button2}>Add</a></div>
                 </form>
             </Modal.Body>
         </Modal>
-
+console.log(res);
+            {/* */}
         </div>
 
     )

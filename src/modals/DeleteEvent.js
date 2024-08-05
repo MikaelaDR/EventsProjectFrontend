@@ -2,18 +2,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import axios from 'axios'
 
 
 
-function DeleteEvent(){
+function DeleteEvent(props){
     const [show, setShow] = useState(false);
+
+    //Connects to Deleting API in backend using axios - GIVING ERROR MESSAGE
+    // const handleDelete = (id) => {
+    //     axios.delete('http://localhost:8080/api/events/' +id)
+    //     .then(result => {
+    //         console.log(res);
+    //         console.log(res.data);
+    //     })
+    //     .catch(err => console.log(err))
+    // }
 
     return(
         <div>
-            {/* Button */}
+            {/* Trash Can Button */}
             <div onClick={() => setShow(true)} className="me-2"><FontAwesomeIcon icon={faTrash} size='3x' style={{color: "white", height:'4vh', paddingRight:'2vh'}} /></div>
 
-            {/* Modal */}
+            {/* Delete Confirmation Modal */}
             
             <Modal
                 show={show}
@@ -30,9 +41,9 @@ function DeleteEvent(){
             </Modal.Header>
             <Modal.Body>
                     
-                    <div style ={styles.button1div}><a href="Add" style={styles.button2}>Yes, delete event.</a></div>
-                    <div style ={styles.button1div}><p style={styles.button2}>Cancel</p></div>
-                
+                    <div style ={styles.button1div}  /* onClick={()=>handleDelete(props.eventID)} */><a href="Add" style={styles.button2}>Yes, delete event.</a></div>
+                    <div style ={styles.button1div} onClick={()=>setShow(false)}><p style={styles.button2}>Cancel</p></div>
+               
             </Modal.Body>
         </Modal>
 
