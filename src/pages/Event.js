@@ -42,8 +42,8 @@ function Event(){
                   <Accordion.Header>
                     <div style={{display:'flex', flexDirection: 'row', width:'100%'}}>
                         <div style={{display:'flex', flexDirection: 'row', justifyContent:'space-between', width:'100%'}}> 
-                            <div><p style={styles.accHeaderText}>{event.title} Title</p></div>
-                            <div><p style={styles.accHeaderDate}>{event.date} Date</p></div>
+                            <div><p style={styles.accHeaderText}>{event.title} </p></div>
+                            <div><p style={styles.accHeaderDate}>{event.startTime} </p></div>
                         </div>
                         <div style={{display:'flex', flexDirection: 'row', justifyContent:'flex-end', width:'100%'}}>
                             <UpdateEvent eventID={event.id}/>

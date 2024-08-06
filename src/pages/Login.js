@@ -2,75 +2,132 @@
  * NOTE:
  * - Get backend error message if login is unsuccessful? 
  */
-import { useState } from "react"
-import Footer from "../components/Footer"
-import { useNavigate } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Footer from "../components/Footer";
 
-function Login(){
-    const navigate = useNavigate()
-    const [errorMessage, setErrorMessage] = useState('')
-    const [username, setUsername] = useState()
-    const [password, setPassword] = useState()
-    const [isLoggedIn] = useState(false)
+function Login() {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-    // Function on button press (error messages, login status, )
-    const attempLogin=()=>{
-        if (password=='' && username=='' ) {
-            setErrorMessage('You must enter your password and username.')  
-        }else if (password==''){
-            setErrorMessage('You must enter your password.')  
-        }else if (username=''){
-            setErrorMessage('You must enter your username.')  
-        }else{
-            isLoggedIn = true
-            navigate('/')
-        }
+  useEffect(() => {
+    const successMessage = localStorage.getItem("registrationSuccess");
+    if (successMessage) {
+      alert(successMessage);
+      localStorage.removeItem("registrationSuccess");
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    if (!username && !password) {
+      setErrorMessage("You must enter your username and password.");
+      return;
+    } else if (!password) {
+      setErrorMessage("You must enter your password.");
+      return;
+    } else if (!username) {
+      setErrorMessage("You must enter your username.");
+      return;
     }
 
+    try {
+      // Fetch user data using the provided username
+      const response = await axios.get(
+        `http://localhost:8080/api/users/name/${username}`
+      );
+      const userData = response.data;
 
-    return(
-        
-        <div style={styles.main}>
-            <div style={styles.mainContainer}>
-                <div style={styles.mainSub}>
-                    <div style={styles.section1}>
-                        
-                        {/* Title */}
-                        <div style={styles.titleContainer}>
-                            <h1 style={styles.title}>Login</h1>
-                        </div>
-                        
-                        {/* Form */}
-                        <form>
-                            <div>
-                                <input style={styles.inputs} placeholder="Username"/>
-                            </div>
-                            <div>
-                                <input style={styles.inputs} type="password" placeholder="Password"/>
-                            </div>
-                            <div style ={styles.button1div}><a href="# if successful home /" style={styles.button1}>Login</a></div>
-                            <div style ={styles.loginDiv} >
-                                <p style ={styles.text}>Don't have an account? </p> 
-                                <a href="/Registration" style ={styles.loginLink}> Register Here</a>
-                            </div>
-                        </form>
-                    </div>
+      // Check if the input password matches the user's password
+      if (userData && userData.password === password) {
+        // Password matches, login successful
+        localStorage.setItem("user", JSON.stringify(userData));
+        navigate("/");
+      } else {
+        // Password doesn't match
+        setErrorMessage("Invalid username or password.");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // User not found
+        setErrorMessage("User not found. Please check your username.");
+      } else if (error.response) {
+        setErrorMessage(
+          error.response.data.message || "An error occurred. Please try again."
+        );
+      } else if (error.request) {
+        setErrorMessage("No response from server. Please try again later.");
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
+    }
+  };
 
-                    <div style={styles.section2}>
-                        <div style={styles.img}>
-                            <a href="/" ><img src="./images/loginPic.png" alt="Humber Events Logo" /></a>
-                        </div>
-                    </div>
-                
-
-                </div>
+  return (
+    <div style={styles.main}>
+      <div style={styles.mainContainer}>
+        <div style={styles.mainSub}>
+          <div style={styles.section1}>
+            <div style={styles.titleContainer}>
+              <h1 style={styles.title}>Login</h1>
             </div>
-            <Footer/>
+
+            <form onSubmit={handleSubmit}>
+              <div>
+                <input
+                  style={styles.inputs}
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div>
+                <input
+                  style={styles.inputs}
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              {errorMessage && (
+                <div style={styles.errorMessage}>{errorMessage}</div>
+              )}
+              <div style={styles.button1div}>
+                <button type="submit" style={styles.button1}>
+                  Login
+                </button>
+              </div>
+              <div style={styles.loginDiv}>
+                <p style={styles.text}>Don't have an account? </p>
+                <a href="/Registration" style={styles.loginLink}>
+                  {" "}
+                  Register Here
+                </a>
+              </div>
+            </form>
+          </div>
+
+          <div style={styles.section2}>
+            <div style={styles.img}>
+              <a href="/">
+                <img src="./images/loginPic.png" alt="Humber Events Logo" />
+              </a>
+            </div>
+          </div>
         </div>
-    )
+      </div>
+      <Footer />
+    </div>
+  );
 }
 
-export default Login
+export default Login;
 
 let styles = {
     main:{
