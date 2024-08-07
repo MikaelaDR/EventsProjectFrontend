@@ -9,10 +9,16 @@ import AddUserToEvent from "../modals/AddUserToEvent";
 import Accordion from "react-bootstrap/Accordion";
 
 function Event() {
-  const [events, setEvents] = useState([]);
+    const [user, setUser] = useState(null);
+    const [events, setEvents] = useState([]);
 
 //Fetches Events data from backend when the page loads to display it to the frontend
   useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    } 
     fetchEvents();
   }, []);
 
@@ -87,6 +93,12 @@ function Event() {
                 return 12
             }
     }
+
+    function ChangeMin(props){
+        if (props.min = 0){
+            return '00'
+        }
+    }
     
 
   function AllCollapseExample() {
@@ -113,6 +125,7 @@ function Event() {
                       </div>
                     </div>
                     <div style={styles.accHeaderButtons}>
+                        <div >Hello</div>
                       <UpdateEvent eventID={event.id} />
                       <DeleteEvent eventID={event.id} />
                     </div>
@@ -132,13 +145,13 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Start Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.startTime.at(3)}/>}:{event.startTime.at(4)} {<Meridiem hr= {event.startTime.at(3)}/>}
+                            {<ChangeTo12Hour hr={event.startTime.at(3)}/>}: <ChangeMin min = {event.startTime.at(4)}/> {<Meridiem hr= {event.startTime.at(3)}/>}
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>End Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.endTime.at(3)}/>}:{event.endTime.at(4)} {<Meridiem hr= {event.endTime.at(3)}/>}
+                            {<ChangeTo12Hour hr={event.endTime.at(3)}/>}:<ChangeMin min = {event.endTime.at(4)}/> {<Meridiem hr= {event.endTime.at(3)}/>}
                           </span>
                         </div>
                         <div style={styles.accRow}>

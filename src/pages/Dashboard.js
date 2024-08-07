@@ -17,7 +17,60 @@ function Dashboard(){
           const foundUser = JSON.parse(loggedInUser);
           setUser(foundUser);
         }
+        fetchEvents();
       }, []);
+
+      const fetchEvents = () => {
+        fetch("http://localhost:8080/api/events")
+          .then((response) => response.json())
+          .then((data) => setEvents(data))
+          .catch((error) => console.error("Error fetching events:", error));
+      };
+
+      events.push(1)
+
+      //Function for Table to displayed Registered events
+      function TableOfEvents(){
+        return(
+            <>
+                 {events.length === 0 ? (
+                            <div>
+                                <p style={{fontSize:'4vh', alignContent:'center'}}>You haven't registered for any events. </p>
+                                <div><a href="/events" style ={styles.loginLink}> Browse Events</a></div>
+                            </div> 
+                           ) : (
+                            events.map((event)=>(
+                                <Table striped bordered hover key={event.id}>
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th >Location</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{event.date}</td>
+                                <td>{events.title}</td>
+                                <td>{events.location}</td>
+                              </tr>
+                              <tr>
+                                <th colSpan={3}>Description</th>
+                              </tr>
+                              <tr>
+                                <td colSpan={3}>{events.description}</td>
+                              </tr>
+                              <tr>
+                                <td colSpan={3}></td>
+                              </tr>
+                             
+                            </tbody>
+                          </Table>
+                            ))
+                           )}
+            </>
+        )
+      }
 
     return(
         
@@ -38,41 +91,8 @@ function Dashboard(){
                     {/* Image */}
                     <div style={styles.section2}>
                         
-                        {/* {events.length === 0 ? 
-                            <div>
-                                <p style={{fontSize:'4vh', alignContent:'center'}}>You haven't registered for any events. </p>
-                                <div><a href="/events" style ={styles.loginLink}> Browse Events</a></div>
-                            <div> 
-                            : */}
-                            <Table striped bordered hover>
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Date</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td colSpan={6}>@mdo</td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td colSpan={2}>Larry the Bird</td>
-                                <td>@twitter</td>
-                              </tr>
-                            </tbody>
-                          </Table>
+                       
+                            <TableOfEvents/>
                         
                         
                     </div>
