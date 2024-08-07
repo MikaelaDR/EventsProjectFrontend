@@ -75,7 +75,7 @@ function Event() {
   }
 
   function ChangeMin(props) {
-    if (props.minute === 0) {
+    if (props.min === 0) {
       return "00";
     }
   }
@@ -128,13 +128,13 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Start Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.startTime.at(3)}/>}: <ChangeMin minute = {event.startTime.at(4)}/> {<Meridiem hr= {event.startTime.at(3)}/>}
+                            {<ChangeTo12Hour hr={event.startTime.at(3)}/>}: <ChangeMin min = {event.startTime.at(4)}/> {<Meridiem hr= {event.startTime.at(3)}/>}
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>End Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.endTime.at(3)}/>}:<ChangeMin minute = {event.endTime.at(4)}/> {<Meridiem hr= {event.endTime.at(3)}/>}
+                            {<ChangeTo12Hour hr={event.endTime.at(3)}/>}:<ChangeMin min = {event.endTime.at(4)}/> {<Meridiem hr= {event.endTime.at(3)}/>}
                           </span>
                         </div>
                         <div style={styles.accRow}>
