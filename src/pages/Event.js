@@ -77,6 +77,9 @@ function Event() {
   function ChangeMin(props) {
     if (props.min === 0) {
       return "00";
+    } 
+    else {
+      return props.min;
     }
   }
 
