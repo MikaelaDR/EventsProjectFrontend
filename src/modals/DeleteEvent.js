@@ -9,15 +9,15 @@ import axios from 'axios'
 function DeleteEvent(props){
     const [show, setShow] = useState(false);
 
-    //Connects to Deleting API in backend using axios - GIVING ERROR MESSAGE
-    // const handleDelete = (id) => {
-    //     axios.delete('http://localhost:8080/api/events/' +id)
-    //     .then(result => {
-    //         console.log(res);
-    //         console.log(res.data);
-    //     })
-    //     .catch(err => console.log(err))
-    // }
+    //Connects to Deleting API in backend using axios
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:8080/api/events/' +id)
+        .then(result => {
+            console.log(result);
+            console.log(result.data);
+        })
+        .catch(err => console.log(err))
+    }
 
     return(
         <div>
@@ -41,7 +41,7 @@ function DeleteEvent(props){
             </Modal.Header>
             <Modal.Body>
                     
-                    <div style ={styles.button1div}  /* onClick={()=>handleDelete(props.eventID)} */><a href="Add" style={styles.button2}>Yes, delete event.</a></div>
+                    <div style ={styles.button1div}  onClick={()=>handleDelete(props.eventID)} ><a href="Events" style={styles.button2}>Yes, delete event.</a></div>
                     <div style ={styles.button1div} onClick={()=>setShow(false)}><p style={styles.button2}>Cancel</p></div>
                
             </Modal.Body>

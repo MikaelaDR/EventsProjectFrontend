@@ -5,29 +5,31 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios'
+
 
 
 function UpdateEvent(props){
     const [show, setShow] = useState(false);
     const [event, setEvent] = useState({})
-
+    const eventID = props.eventID
     //Fetches events data from backend, saving it to events array in frontend
     useEffect(() => {
-        fetch('http://localhost:8080/api/events')
+        fetch('http://localhost:8080/api/events/' + eventID)
           .then(response => response.json())
           .then(data => setEvent(data))
           .catch(error => console.error('Error fetching events:', error));
       }, []);
 
     //Connects to Update API in backend using axios -GIVING ERROR MESSAGE
-    // const handleUpdate = (id) => {
-    //     axios.put('http://localhost:8080/api/events/' +id)
-    //     .then(result => {
-    //         console.log(res);
-    //         console.log(res.data);
-    //     })
-    //     .catch(err => console.log(err))
-    // }
+    const handleUpdate = (id) => {
+        axios.put('http://localhost:8080/api/events/' +id)
+        .then(result => {
+            console.log(result);
+            console.log(result.data);
+        })
+        .catch(err => console.log(err))
+    }
 
     return(
         <div>
@@ -52,7 +54,7 @@ function UpdateEvent(props){
             <Modal.Body>
                 <form>
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between' }}>
-                        <input style={styles.inputs} placeholder="Event Name"/>
+                        <input style={styles.inputs} placeholder="Event Name" value={event.title} onChange={()=>setEvent}/>
                         <input style={styles.inputs} placeholder="Event Location"/>
                         <input style={styles.inputs} type='date' placeholder="Date"/>
                     </div>
@@ -63,10 +65,7 @@ function UpdateEvent(props){
                     <div>
                         <textarea style={styles.inputs} type='' placeholder="Description"/>
                     </div>
-                    <div>
-                        <input style={styles.inputs} type="file" placeholder="Image"/>
-                    </div>
-                    <div style ={styles.button1div}  /* onClick={()=>handleUpdate(props.eventID)}*/><a href="Add" style={styles.button2}>Add</a></div>
+                    <div style ={styles.button1div}  onClick={()=>handleUpdate(props.eventID)}><a href="Add" style={styles.button2}>Add</a></div>
                 </form>
             </Modal.Body>
         </Modal>

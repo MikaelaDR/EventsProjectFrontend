@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import React from "react"
 import Footer from "../components/Footer"
 import Header from "../components/Header";
@@ -6,7 +7,15 @@ import '../App.css';
 
 
 function Dashboard(){
+    const [user, setUser] = useState('');
    
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+          const foundUser = JSON.parse(loggedInUser);
+          setUser(foundUser);
+        }
+      }, []);
 
     return(
         
@@ -21,7 +30,7 @@ function Dashboard(){
                         </div>
                         {/* Title */}
                         <div style={styles.titleContainer}>
-                            <h1 style={styles.title}>[username]'s Events</h1>
+                            <h1 style={styles.title}>{user.first_name}'s Events</h1>
                         </div>
                     </div>
                     {/* Image */}
