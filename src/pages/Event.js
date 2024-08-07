@@ -22,6 +22,72 @@ function Event() {
       .catch((error) => console.error("Error fetching events:", error));
   };
 
+  function ChangeToMonth (props){
+    
+    switch(props.monthNum){
+        case 1:
+            return "January"
+        case 2:
+            return "February"
+        case 3:
+            return "March"
+        case 4:
+            return "April"
+        case 5:
+            return "May"
+        case 6:
+            return "June"
+        case 7:
+            return "July"
+        case 8:
+            return "August"
+        case 9:
+            return "September"
+        case 10:
+            return "October"
+        case 11:
+            return "November"
+        case 12:
+            return "December"
+        }
+    }
+
+    function Meridiem (props){
+        if (props.hr > 12){
+            return "PM"
+        }else return "AM"
+    }
+
+    function ChangeTo12Hour(props){
+        switch(props.hr) {
+            case 13:
+                return 1
+            case 14:
+                return 2
+            case 15:
+                return 3
+            case 16:
+                return 4
+            case 17:
+                return 5
+            case 18:
+                return 6
+            case 19:
+                return 7
+            case 20:
+                return 8
+            case 21:
+                return 9
+            case 22:
+                return 10
+            case 23:
+                return 11
+            case 24:
+                return 12
+            }
+    }
+    
+
   function AllCollapseExample() {
     return (
       <>
@@ -42,7 +108,7 @@ function Event() {
                         <p style={styles.accHeaderText}>{event.title}</p>
                       </div>
                       <div>
-                        <p style={styles.accHeaderDate}>{event.startTime}</p>
+                        <p style={styles.accHeaderDate}>{<ChangeToMonth monthNum= {event.startTime.at(1)} /> } {event.startTime.at(2)}, {event.startTime.at(0)} </p>
                       </div>
                     </div>
                     <div style={styles.accHeaderButtons}>
@@ -65,13 +131,13 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Start Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {event.startTime}
+                            {<ChangeTo12Hour hr={event.startTime.at(3)}/>}:{event.startTime.at(4)} {<Meridiem hr= {event.startTime.at(3)}/>}
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>End Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {event.endTime}
+                            {<ChangeTo12Hour hr={event.endTime.at(3)}/>}:{event.endTime.at(4)} {<Meridiem hr= {event.endTime.at(3)}/>}
                           </span>
                         </div>
                         <div style={styles.accRow}>

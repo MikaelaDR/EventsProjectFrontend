@@ -242,7 +242,7 @@ let styles = {
   },
   selectInput: {
     fontSize: "3vh",
-    width: "4vh",
+    width: "50%",
   },
   rowMe: {
     display: "flex",

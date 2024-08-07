@@ -70,7 +70,6 @@ function UpdateEvent(props){
                 </form>
             </Modal.Body>
         </Modal>
-console.log(res);
             {/* */}
         </div>
 
