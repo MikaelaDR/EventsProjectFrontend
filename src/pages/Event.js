@@ -7,7 +7,6 @@ import UpdateEvent from "../modals/UpdateEvent";
 import DeleteEvent from "../modals/DeleteEvent";
 import AddUserToEvent from "../modals/AddUserToEvent";
 import Accordion from "react-bootstrap/Accordion";
-import 
 
 function Event() {
   const [events, setEvents] = useState([]);
@@ -24,7 +23,6 @@ function Event() {
       .catch((error) => console.error("Error fetching events:", error));
   };
 
-  //Date + Time conversion functions ------------------------------------
   function ChangeToMonth (props){
     
     switch(props.monthNum){
@@ -91,9 +89,6 @@ function Event() {
     }
     
 
-
-    
-    //Events Accordion function --------------------------------------------------------------
   function AllCollapseExample() {
     return (
       <>
