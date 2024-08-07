@@ -3,11 +3,13 @@ import React from "react"
 import Footer from "../components/Footer"
 import Header from "../components/Header";
 import '../App.css';
+import Table from 'react-bootstrap/Table';
 
 
 
 function Dashboard(){
     const [user, setUser] = useState('');
+    const [events, setEvents] = useState([])
    
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
@@ -35,8 +37,44 @@ function Dashboard(){
                     </div>
                     {/* Image */}
                     <div style={styles.section2}>
-                        <p style={{fontSize:'4vh', alignContent:'center'}}>You haven't registered for any events. </p>
-                        <div><a href="/events" style ={styles.loginLink}> Browse Events</a></div>
+                        
+                        {/* {events.length === 0 ? 
+                            <div>
+                                <p style={{fontSize:'4vh', alignContent:'center'}}>You haven't registered for any events. </p>
+                                <div><a href="/events" style ={styles.loginLink}> Browse Events</a></div>
+                            <div> 
+                            : */}
+                            <Table striped bordered hover>
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td colSpan={6}>@mdo</td>
+                              </tr>
+                              <tr>
+                                <td>2</td>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                              </tr>
+                              <tr>
+                                <td>3</td>
+                                <td colSpan={2}>Larry the Bird</td>
+                                <td>@twitter</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        
+                        
                     </div>
                 
 

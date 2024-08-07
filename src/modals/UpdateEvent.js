@@ -54,18 +54,18 @@ function UpdateEvent(props){
             <Modal.Body>
                 <form>
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between' }}>
-                        <input style={styles.inputs} placeholder="Event Name" value={event.title} onChange={()=>setEvent}/>
-                        <input style={styles.inputs} placeholder="Event Location"/>
-                        <input style={styles.inputs} type='date' placeholder="Date"/>
+                        <input style={styles.inputs} placeholder="Event Name" value={event.title} onChange={e=>setEvent({...event.title, name:e.target.value})}/>
+                        <input style={styles.inputs} placeholder="Event Location" value={event.location} onChange={e=>setEvent({...event.location, name:e.target.value})}/>
+                        <input style={styles.inputs} type='date' placeholder="Date" value={event.startTime} onChange={e=>setEvent({...event.startTime, name:e.target.value})}/>
                     </div>
                     <div style={{display:'flex', flexDirection:'row' }}>
                         <p style={{fontSize:'2vh'}}>Start Time:</p><input style={styles.inputs} type='time' placeholder="Start Time"/>
                         <p style={{fontSize:'2vh'}}>End Time:</p><input style={styles.inputs} type='time' placeholder="End Time"/>
                     </div>
                     <div>
-                        <textarea style={styles.inputs} type='' placeholder="Description"/>
+                        <textarea style={styles.inputs} type='' placeholder="Description" value={event.description} onChange={e=>setEvent({...event.description, name:e.target.value})}/>
                     </div>
-                    <div style ={styles.button1div}  onClick={()=>handleUpdate(props.eventID)}><a href="Add" style={styles.button2}>Add</a></div>
+                    <div style ={styles.button1div}  onClick={()=>handleUpdate(props.eventID)}><a href="events" style={styles.button2}>Update</a></div>
                 </form>
             </Modal.Body>
         </Modal>
