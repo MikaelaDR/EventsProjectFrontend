@@ -86,6 +86,8 @@ function AddEvent() {
                 justifyContent: "space-between",
               }}
             >
+              <input type="hidden" value={eventData.id}/>
+              <inout type="hidden" value=""/>
               <input
                 style={styles.inputs}
                 name="title"
@@ -110,6 +112,7 @@ function AddEvent() {
                 value={eventData.startTime}
                 onChange={handleInputChange}
               />
+              <div> {eventData.startTime}</div>
               <p style={{ fontSize: "2vh" }}>End Time:</p>
               <input
                 style={styles.inputs}

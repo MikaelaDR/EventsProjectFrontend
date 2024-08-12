@@ -35,53 +35,27 @@ function Event() {
       .catch((error) => console.error("Error fetching events:", error));
   };
 
-  function ChangeToMonth(props) {
-    switch (props.monthNum) {
-      case 1:
-        return "January";
-      case 2:
-        return "February";
-      case 3:
-        return "March";
-      case 4:
-        return "April";
-      case 5:
-        return "May";
-      case 6:
-        return "June";
-      case 7:
-        return "July";
-      case 8:
-        return "August";
-      case 9:
-        return "September";
-      case 10:
-        return "October";
-      case 11:
-        return "November";
-      case 12:
-        return "December";
-      default:
-        return "";
+  function FormatTime(props) {
+    const dateString = props.timeInfo
+    const date = new Date(dateString)
+    let hours = date.getHours();
+    const minutes =date.getMinutes();
+    let meridiem = hours > 12 ? "PM":"AM"
+
+    if(hours > 12){
+        hours = hours - 12
     }
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${meridiem}`;
+
+    return formattedTime
   }
 
-  function Meridiem(props) {
-    return props.hr >= 12 ? "PM" : "AM";
-  }
-
-  function ChangeTo12Hour(props) {
-    return props.hr > 12 ? props.hr - 12 : props.hr;
-  }
-
-  function ChangeMin(props) {
-    if (props.min === 0) {
-      return "00";
-    } 
-    else {
-      return props.min;
-    }
-  }
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+  
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
 
   function AllCollapseExample() {
     return (
@@ -102,10 +76,9 @@ function Event() {
                       <div>
                         <p style={styles.accHeaderText}>{event.title}</p>
                       </div>
-                      <div>
+                      <div >
                         <p style={styles.accHeaderDate}>
-                          {<ChangeToMonth monthNum={event.startTime.at(1)} />}{" "}
-                          {event.startTime.at(2)}, {event.startTime.at(0)}
+                          {formatDate(event.startTime)}
                         </p>
                       </div>
                     </div>
@@ -131,19 +104,25 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Start Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.startTime.at(3)}/>}: <ChangeMin min = {event.startTime.at(4)}/> {<Meridiem hr= {event.startTime.at(3)}/>}
+                            <FormatTime timeInfo = {event.startTime}/>
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>End Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.endTime.at(3)}/>}:<ChangeMin min = {event.endTime.at(4)}/> {<Meridiem hr= {event.endTime.at(3)}/>}
+                          <FormatTime timeInfo = {event.endTime}/>
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Location:</p>
                           <span style={{ marginLeft: "1vh" }}>
                             {event.location}
+                          </span>
+                        </div>
+                        <div style={styles.accRow}>
+                          <p style={styles.accBodTitle}>Club:</p>
+                          <span style={{ marginLeft: "1vh" }}>
+                            {event.userId}
                           </span>
                         </div>
                         <div>
