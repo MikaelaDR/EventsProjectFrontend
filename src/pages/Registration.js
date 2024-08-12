@@ -11,7 +11,6 @@ function Registration() {
     last_name: "",
     username: "",
     password: "",
-    id: "",
     role: "",
   });
 
@@ -113,13 +112,6 @@ function Registration() {
                 />
               </div>
               <div style={styles.rowMe}>
-                <input
-                  style={styles.input}
-                  name="id"
-                  placeholder="ID"
-                  value={formData.id}
-                  onChange={handleChange}
-                />
                 <select
                   style={styles.selectInput}
                   name="role"

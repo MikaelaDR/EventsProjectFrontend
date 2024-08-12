@@ -37,25 +37,23 @@ function Login() {
     }
 
     try {
-      // Fetch user data using the provided username
-      const response = await axios.get(
-        `http://localhost:8080/api/users/name/${username}`
+      // Send a POST request to the authenticate endpoint
+      const response = await axios.post(
+        "http://localhost:8080/api/users/authenticate",
+        {
+          username,
+          password,
+        }
       );
-      const userData = response.data;
 
-      // Check if the input password matches the user's password
-      if (userData && userData.password === password) {
-        // Password matches, login successful
-        localStorage.setItem("user", JSON.stringify(userData));
-        navigate("/");
-      } else {
-        // Password doesn't match
-        setErrorMessage("Invalid username or password.");
-      }
+      // If authentication is successful, store user data and navigate
+      const userData = response.data;
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/");
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        // User not found
-        setErrorMessage("User not found. Please check your username.");
+      if (error.response && error.response.status === 401) {
+        // Authentication failed
+        setErrorMessage("Invalid username or password.");
       } else if (error.response) {
         setErrorMessage(
           error.response.data.message || "An error occurred. Please try again."
