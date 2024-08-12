@@ -109,7 +109,7 @@ function Event() {
                         </p>
                       </div>
                     </div>
-                    {userRole !== "student" && (
+                    {user && userRole !== "student" && (
                       <div style={styles.accHeaderButtons}>
                         <UpdateEvent eventID={event.id} />
                         <DeleteEvent eventID={event.id} />
@@ -182,7 +182,7 @@ function Event() {
         <div style={styles.section1}>
           <h1 style={styles.title}>EVENTS</h1>
         </div>
-        {userRole !== "student" && (
+        {user && userRole !== "student" && (
           <div style={styles.addEventButtonContainer}>
             <AddEvent />
           </div>
