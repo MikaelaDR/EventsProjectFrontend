@@ -76,13 +76,13 @@ function Event() {
                       <div>
                         <p style={styles.accHeaderText}>{event.title}</p>
                       </div>
-                      <div >
+                      <div>
                         <p style={styles.accHeaderDate}>
                           {formatDate(event.startTime)}
                         </p>
                       </div>
                     </div>
-                    {user && userRole !== "student" && (
+                    {user && (userRole === "admin" || user.id === event.userId) && (
                       <div style={styles.accHeaderButtons}>
                         <UpdateEvent eventID={event.id} />
                         <DeleteEvent eventID={event.id} />
@@ -104,13 +104,13 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Start Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            <FormatTime timeInfo = {event.startTime}/>
+                            <FormatTime timeInfo={event.startTime} />
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>End Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                          <FormatTime timeInfo = {event.endTime}/>
+                            <FormatTime timeInfo={event.endTime} />
                           </span>
                         </div>
                         <div style={styles.accRow}>

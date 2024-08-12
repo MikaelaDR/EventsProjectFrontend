@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
 function AddEvent() {
   const [show, setShow] = useState(false);
+  const [user, setUser] = useState(null);
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
     startTime: "",
     endTime: "",
     location: "",
-    creatorId: "", // We'll set this when submitting
+    userId: "", // We'll set this when submitting
   });
 
   const handleInputChange = (e) => {
@@ -19,20 +20,28 @@ function AddEvent() {
     setEventData({ ...eventData, [name]: value });
   };
 
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Get the user ID from localStorage (assuming it's stored there after login)
-    const user = JSON.parse(localStorage.getItem("user"));
+    // Get the user ID from localStorage (assuming it'
     if (!user || !user.id) {
       alert("You must be logged in to create an event.");
       return;
     }
+    
 
     // Prepare the data for submission
     const dataToSubmit = {
       ...eventData,
-      creatorId: user.id,
+      userId: user.id,
       startTime: new Date(eventData.startTime).toISOString(),
       endTime: new Date(eventData.endTime).toISOString(),
     };
@@ -51,7 +60,7 @@ function AddEvent() {
         startTime: "",
         endTime: "",
         location: "",
-        creatorId: "",
+        userId: "",
       });
       // You might want to refresh the events list or show a success message here
     } catch (error) {
@@ -85,7 +94,7 @@ function AddEvent() {
                 flexDirection: "row",
                 justifyContent: "space-between",
               }}
-            >
+            > 
               <input type="hidden" value={eventData.id}/>
               <inout type="hidden" value=""/>
               <input
