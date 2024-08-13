@@ -7,12 +7,15 @@ import UpdateEvent from "../modals/UpdateEvent";
 import DeleteEvent from "../modals/DeleteEvent";
 import AddUserToEvent from "../modals/AddUserToEvent";
 import Accordion from "react-bootstrap/Accordion";
+import Pagination from "react-bootstrap/Pagination";
 
 function Event() {
   const [user, setUser] = useState(null);
   const [events, setEvents] = useState([]);
   const [userRole, setUserRole] = useState("");
   const [clubNames, setClubNames] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [eventsPerPage] = useState(3);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
@@ -86,16 +89,21 @@ function Event() {
   };
 
   function AllCollapseExample() {
+    // Get current events
+    const indexOfLastEvent = currentPage * eventsPerPage;
+    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+    const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
+
     return (
       <>
-        {events.length === 0 ? (
+        {currentEvents.length === 0 ? (
           <div>
             <p style={{ fontSize: "4vh", alignContent: "center" }}>
               There are no upcoming events.
             </p>
           </div>
         ) : (
-          events.map((event) => (
+          currentEvents.map((event) => (
             <Accordion key={event.id}>
               <Accordion.Item eventKey={event.id}>
                 <Accordion.Header>
@@ -193,6 +201,8 @@ function Event() {
     );
   }
 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div style={styles.main}>
       <Header />
@@ -212,6 +222,22 @@ function Event() {
         <div style={styles.section2}>
           <AllCollapseExample />
         </div>
+      </div>
+
+      <div style={styles.paginationContainer}>
+        <Pagination>
+          {[...Array(Math.ceil(events.length / eventsPerPage))].map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
 
       <Footer />
@@ -367,6 +393,11 @@ const styles = {
   signUpButtonContainer: {
     display: "flex",
     justifyContent: "center",
+  },
+  paginationContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "5vh",
   },
 };
 
