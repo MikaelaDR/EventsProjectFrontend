@@ -56,11 +56,10 @@ function UpdateEvent(props){
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between' }}>
                         <input style={styles.inputs} placeholder="Event Name" value={event.title} onChange={e=>setEvent({...event.title, name:e.target.value})}/>
                         <input style={styles.inputs} placeholder="Event Location" value={event.location} onChange={e=>setEvent({...event.location, name:e.target.value})}/>
-                        <input style={styles.inputs} type='date' placeholder="Date" value={event.startTime} onChange={e=>setEvent({...event.startTime, name:e.target.value})}/>
                     </div>
                     <div style={{display:'flex', flexDirection:'row' }}>
-                        <p style={{fontSize:'2vh'}}>Start Time:</p><input style={styles.inputs} type='time' placeholder="Start Time"/>
-                        <p style={{fontSize:'2vh'}}>End Time:</p><input style={styles.inputs} type='time' placeholder="End Time"/>
+                        <p style={{fontSize:'2vh'}}>Start Time:</p><input style={styles.inputs} type='datetime-local' onChange={e=>setEvent({...event.startTime, name:e.target.value})} value={event.startTime}/>
+                        <p style={{fontSize:'2vh'}}>End Time:</p><input style={styles.inputs} type='datetime-local' onChange={e=>setEvent({...event.startTime, name:e.target.value})} value={event.startTime}/>
                     </div>
                     <div>
                         <textarea style={styles.inputs} type='' placeholder="Description" value={event.description} onChange={e=>setEvent({...event.description, name:e.target.value})}/>

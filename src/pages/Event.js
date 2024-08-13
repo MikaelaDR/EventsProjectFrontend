@@ -11,8 +11,8 @@ import Accordion from "react-bootstrap/Accordion";
 function Event() {
     const [user, setUser] = useState(null);
     const [events, setEvents] = useState([]);
+  const [userRole, setUserRole] = useState("");
 
-//Fetches Events data from backend when the page loads to display it to the frontend
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
@@ -20,6 +20,12 @@ function Event() {
       setUser(foundUser);
     } 
     fetchEvents();
+
+    // Retrieve user role from localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role) {
+      setUserRole(user.role);
+    }
   }, []);
 
   const fetchEvents = () => {
@@ -29,77 +35,27 @@ function Event() {
       .catch((error) => console.error("Error fetching events:", error));
   };
 
-  function ChangeToMonth (props){
-    
-    switch(props.monthNum){
-        case 1:
-            return "January"
-        case 2:
-            return "February"
-        case 3:
-            return "March"
-        case 4:
-            return "April"
-        case 5:
-            return "May"
-        case 6:
-            return "June"
-        case 7:
-            return "July"
-        case 8:
-            return "August"
-        case 9:
-            return "September"
-        case 10:
-            return "October"
-        case 11:
-            return "November"
-        case 12:
-            return "December"
-        }
-    }
+  function FormatTime(props) {
+    const dateString = props.timeInfo
+    const date = new Date(dateString)
+    let hours = date.getHours();
+    const minutes =date.getMinutes();
+    let meridiem = hours > 12 ? "PM":"AM"
 
-    function Meridiem (props){
-        if (props.hr > 12){
-            return "PM"
-        }else return "AM"
+    if(hours > 12){
+        hours = hours - 12
     }
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${meridiem}`;
 
-    function ChangeTo12Hour(props){
-        switch(props.hr) {
-            case 13:
-                return 1
-            case 14:
-                return 2
-            case 15:
-                return 3
-            case 16:
-                return 4
-            case 17:
-                return 5
-            case 18:
-                return 6
-            case 19:
-                return 7
-            case 20:
-                return 8
-            case 21:
-                return 9
-            case 22:
-                return 10
-            case 23:
-                return 11
-            case 24:
-                return 12
-            }
-    }
+    return formattedTime
+  }
 
-    function ChangeMin(props){
-      if (props.minute === 0){
-        return "00"
-      }
-    }
-    
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+  
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
 
   function AllCollapseExample() {
     return (
@@ -121,13 +77,17 @@ function Event() {
                         <p style={styles.accHeaderText}>{event.title}</p>
                       </div>
                       <div>
-                        <p style={styles.accHeaderDate}>{<ChangeToMonth monthNum= {event.startTime.at(1)} /> } {event.startTime.at(2)}, {event.startTime.at(0)} </p>
+                        <p style={styles.accHeaderDate}>
+                          {formatDate(event.startTime)}
+                        </p>
                       </div>
                     </div>
-                    <div style={styles.accHeaderButtons}>
-                      <UpdateEvent eventID={event.id} />
-                      <DeleteEvent eventID={event.id} />
-                    </div>
+                    {user && (userRole === "admin" || user.id === event.userId) && (
+                      <div style={styles.accHeaderButtons}>
+                        <UpdateEvent eventID={event.id} />
+                        <DeleteEvent eventID={event.id} />
+                      </div>
+                    )}
                   </div>
                 </Accordion.Header>
                 <Accordion.Body>
@@ -144,19 +104,25 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Start Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.startTime.at(3)}/>}: <ChangeMin minute = {event.startTime.at(4)}/> {<Meridiem hr= {event.startTime.at(3)}/>}
+                            <FormatTime timeInfo={event.startTime} />
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>End Time:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {<ChangeTo12Hour hr={event.endTime.at(3)}/>}:<ChangeMin minute = {event.endTime.at(4)}/> {<Meridiem hr= {event.endTime.at(3)}/>}
+                            <FormatTime timeInfo={event.endTime} />
                           </span>
                         </div>
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Location:</p>
                           <span style={{ marginLeft: "1vh" }}>
                             {event.location}
+                          </span>
+                        </div>
+                        <div style={styles.accRow}>
+                          <p style={styles.accBodTitle}>Club:</p>
+                          <span style={{ marginLeft: "1vh" }}>
+                            {event.userId}
                           </span>
                         </div>
                         <div>
@@ -195,9 +161,11 @@ function Event() {
         <div style={styles.section1}>
           <h1 style={styles.title}>EVENTS</h1>
         </div>
-        <div style={styles.addEventButtonContainer}>
-          <AddEvent />
-        </div>
+        {user && userRole !== "student" && (
+          <div style={styles.addEventButtonContainer}>
+            <AddEvent />
+          </div>
+        )}
         <div style={styles.dividerYellow} />
       </div>
 
