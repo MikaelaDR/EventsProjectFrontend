@@ -45,27 +45,35 @@ function Login() {
         {
           username,
           password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
       // If authentication is successful, store user data and navigate
       const userData = response.data;
+      const userDataWithoutPassword = {
+        ...userData,
+        password: undefined, // Remove password from the stored user data
+      };
+      localStorage.setItem("user", JSON.stringify(userDataWithoutPassword));
+      login(userDataWithoutPassword); // Use the login function from UserContext
+      navigate("/");
 
-      // Check if the input password matches the user's password
-      if (userData && userData.password === password) {
-        // Password matches, login successful
-        const userDataWithoutPassword = {
-          ...userData,
-          password: undefined, // Remove password from the stored user data
-        };
-        localStorage.setItem("user", JSON.stringify(userDataWithoutPassword));
-        login(userDataWithoutPassword); // Use the login function from UserContext
-        navigate("/");
-      } else {
-        // Password doesn't match
-        setErrorMessage("Invalid username or password.");
-      }
     } catch (error) {
+      console.error("Full error:", error);
+      if (error.response) {
+        console.error("Error response:", error.response.data);
+        console.error("Error status:", error.response.status);
+        console.error("Error headers:", error.response.headers);
+      } else if (error.request) {
+        console.error("Error request:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
       if (error.response && error.response.status === 401) {
         // Authentication failed
         setErrorMessage("Invalid username or password.");
