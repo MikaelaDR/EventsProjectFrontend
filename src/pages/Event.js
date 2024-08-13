@@ -12,6 +12,7 @@ function Event() {
   const [user, setUser] = useState(null);
   const [events, setEvents] = useState([]);
   const [userRole, setUserRole] = useState("");
+  const [clubNames, setClubNames] = useState({});
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
@@ -31,8 +32,30 @@ function Event() {
   const fetchEvents = () => {
     fetch("http://localhost:8080/api/events")
       .then((response) => response.json())
-      .then((data) => setEvents(data))
+      .then((data) => {
+        setEvents(data);
+        fetchClubNames(data);
+      })
       .catch((error) => console.error("Error fetching events:", error));
+  };
+
+  const fetchClubNames = (eventsData) => {
+    const uniqueUserIds = [
+      ...new Set(eventsData.map((event) => event.userId).filter(Boolean)),
+    ];
+
+    Promise.all(
+      uniqueUserIds.map((userId) =>
+        fetch(`http://localhost:8080/api/users/${userId}`)
+          .then((response) => response.json())
+          .then((userData) => ({ [userId]: userData.username }))
+      )
+    )
+      .then((results) => {
+        const newClubNames = Object.assign({}, ...results);
+        setClubNames(newClubNames);
+      })
+      .catch((error) => console.error("Error fetching club names:", error));
   };
 
   function FormatTime(props) {
@@ -128,7 +151,9 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Club:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {event.userId || "N/A"}
+                            {event.userId
+                              ? clubNames[event.userId] || "Loading..."
+                              : "N/A"}
                           </span>
                         </div>
                         <div>
