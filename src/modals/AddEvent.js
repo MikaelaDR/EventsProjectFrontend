@@ -62,7 +62,7 @@ function AddEvent() {
         location: "",
         userId: "",
       });
-      // You might want to refresh the events list or show a success message here
+      window.location.reload();
     } catch (error) {
       console.error("Error adding event:", error);
       alert("Failed to add event. Please try again.");
