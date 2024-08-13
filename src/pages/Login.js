@@ -1,14 +1,16 @@
 /**
  * NOTE:
- * - Get backend error message if login is unsuccessful? 
+ * - Get backend error message if login is unsuccessful?
  */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
+import { UserContext } from "../context/UserContext"; // Make sure this path is correct
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useContext(UserContext); // Add this line
   const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +48,12 @@ function Login() {
       // Check if the input password matches the user's password
       if (userData && userData.password === password) {
         // Password matches, login successful
-        localStorage.setItem("user", JSON.stringify(userData));
+        const userDataWithoutPassword = {
+          ...userData,
+          password: undefined, // Remove password from the stored user data
+        };
+        localStorage.setItem("user", JSON.stringify(userDataWithoutPassword));
+        login(userDataWithoutPassword); // Use the login function from UserContext
         navigate("/");
       } else {
         // Password doesn't match
@@ -130,128 +137,121 @@ function Login() {
 export default Login;
 
 let styles = {
-    main:{
-        display: 'flex',
-        alignItems:'center',
-        alignContent:'center',
-        flexDirection:'column',
-        backgroundColor: '#14234B',
-        width:'100%',
-        color: 'white'
-    },
-    mainContainer:{
-        backgroundColor: '#D5AA30',
-        display:'flex',
-        justifyContent:'center',
-        width:'100%'
+  main: {
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    flexDirection: "column",
+    backgroundColor: "#14234B",
+    width: "100%",
+    color: "white",
+  },
+  mainContainer: {
+    backgroundColor: "#D5AA30",
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+  },
 
-    },
-    
-    mainSub:{
-        margin:'20vh',
-        display:'flex',
-        flexDirection:'row',
-        
-        border: 'white 2vh solid',
-        borderRadius:'5vh',
-        // height:'80%',
-        wrap:'flex-wrap'
-    },
+  mainSub: {
+    margin: "20vh",
+    display: "flex",
+    flexDirection: "row",
 
-    section1:{
-        backgroundColor: '#D5AA30',
+    border: "white 2vh solid",
+    borderRadius: "5vh",
+    // height:'80%',
+    wrap: "flex-wrap",
+  },
 
-        display: 'flex',
-        flexDirection: 'column',
-        paddingRight:'3vh',
-        paddingLeft:'3vh',
-        justifyContent: 'center',
-        alignItems:'center',
-        // borderRadius:'5vh',
-    },
+  section1: {
+    backgroundColor: "#D5AA30",
 
-    section2:{
-        backgroundColor: '#D5AA30',
-    },
+    display: "flex",
+    flexDirection: "column",
+    paddingRight: "3vh",
+    paddingLeft: "3vh",
+    justifyContent: "center",
+    alignItems: "center",
+    // borderRadius:'5vh',
+  },
 
-    logo:{
-        alignItems:'center',
-        width:'15vh',
-    },
+  section2: {
+    backgroundColor: "#D5AA30",
+  },
 
-    titleContainer:{
-        width: '60%'
-    },
+  logo: {
+    alignItems: "center",
+    width: "15vh",
+  },
 
-    title:{
-        color: '#14234B',
-        fontSize: '6vh',
-        textAlign: 'center',
-    },
+  titleContainer: {
+    width: "60%",
+  },
 
-    img:{
-        // opacity: '43%',
-        margin:'1vh',
-        height:'auto',
+  title: {
+    color: "#14234B",
+    fontSize: "6vh",
+    textAlign: "center",
+  },
 
-    }, 
+  img: {
+    // opacity: '43%',
+    margin: "1vh",
+    height: "auto",
+  },
 
-    inputs:{
-        textDecoration:'none',
-        width: '98%',
-        borderRadius:'0.7vh',
-        textAlign: 'center',
-        color:'#14234B',
-        padding:'0.5vh',
-        fontSize:'3vh',
-        marginBottom:'2vh',
-    },
+  inputs: {
+    textDecoration: "none",
+    width: "98%",
+    borderRadius: "0.7vh",
+    textAlign: "center",
+    color: "#14234B",
+    padding: "0.5vh",
+    fontSize: "3vh",
+    marginBottom: "2vh",
+  },
 
-    rowMe:{
-        display: 'flex',
-        flexDirection:'row',
-    },
-    button1:{
-        textDecoration: 'none',
-        color: 'white',
-        backgroundColor: '#14234B',
-        paddingTop: '1vh',
-        paddingBottom: '1vh',
-        paddingRight:'5vh',
-        paddingLeft: '5vh',
-        borderRadius: '1vh',
-        fontSize: '3vh',
-        fontWeight: '700',
-        alignContent:'center'
+  rowMe: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  button1: {
+    textDecoration: "none",
+    color: "white",
+    backgroundColor: "#14234B",
+    paddingTop: "1vh",
+    paddingBottom: "1vh",
+    paddingRight: "5vh",
+    paddingLeft: "5vh",
+    borderRadius: "1vh",
+    fontSize: "3vh",
+    fontWeight: "700",
+    alignContent: "center",
+  },
 
-    },
+  button1div: {
+    marginTop: "2vh",
+    marginBottom: "2vh",
+    display: "flex",
+    justifyContent: "center",
+  },
 
-    button1div:{
-        marginTop: '2vh',
-        marginBottom: '2vh',
-        display: 'flex',
-        justifyContent: 'center'
-    },
+  loginLink: {
+    paddingLeft: "1vh",
+    fontSize: "2vh",
+    color: "white",
+  },
 
-    loginLink:{
-        paddingLeft:'1vh',
-        fontSize:'2vh',
-        color:'white'
-    },
+  text: {
+    fontSize: "2vh",
+    fontWeight: "600",
+  },
 
-    text:{
-        fontSize:'2vh',
-        fontWeight:'600'
-    },
-
-    loginDiv:{
-        
-        display:'flex',
-        justifyContent:'center',
-        alignContent:'center',
-        alignItems:'center'
-    }
-
-
-}
-
+  loginDiv: {
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+  },
+};

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
@@ -8,9 +8,16 @@ function AddUserToEvent({ eventId, onSuccess }) {
   const [error, setError] = useState(null);
   const { user } = useContext(UserContext);
 
+  useEffect(() => {
+    console.log("Current user in AddUserToEvent:", user);
+  }, [user]);
+
   const handleAddUserToEvent = async () => {
+    console.log("Attempting to add user to event. User:", user);
+
     if (!user) {
       setError("You must be logged in to join an event");
+      console.error("User is not logged in or user data is not available");
       return;
     }
 
