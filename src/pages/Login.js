@@ -10,7 +10,7 @@ import { UserContext } from "../context/UserContext"; // Make sure this path is 
 
 function Login() {
   const navigate = useNavigate();
-  const { login } = useContext(UserContext); // Add this line
+  const { login } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -50,11 +50,6 @@ function Login() {
 
       // If authentication is successful, store user data and navigate
       const userData = response.data;
-      localStorage.setItem("user", JSON.stringify(userData));
-      navigate("/");
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Authentication failed
 
       // Check if the input password matches the user's password
       if (userData && userData.password === password) {
@@ -68,6 +63,11 @@ function Login() {
         navigate("/");
       } else {
         // Password doesn't match
+        setErrorMessage("Invalid username or password.");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Authentication failed
         setErrorMessage("Invalid username or password.");
       } else if (error.response) {
         setErrorMessage(
