@@ -65,6 +65,7 @@ function UpdateEvent(props) {
           console.log("Update successful:", result);
           setShow(false);
           if (props.onUpdate) props.onUpdate();
+          window.location.reload();
         })
         .catch((err) => {
           console.error(
