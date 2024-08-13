@@ -9,8 +9,8 @@ import AddUserToEvent from "../modals/AddUserToEvent";
 import Accordion from "react-bootstrap/Accordion";
 
 function Event() {
-    const [user, setUser] = useState(null);
-    const [events, setEvents] = useState([]);
+  const [user, setUser] = useState(null);
+  const [events, setEvents] = useState([]);
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function Event() {
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUser(foundUser);
-    } 
+    }
     fetchEvents();
 
     // Retrieve user role from localStorage
@@ -36,25 +36,30 @@ function Event() {
   };
 
   function FormatTime(props) {
-    const dateString = props.timeInfo
-    const date = new Date(dateString)
+    const [year, month, day, hour, minute] = props.timeInfo;
+    const date = new Date(year, month - 1, day, hour, minute);
     let hours = date.getHours();
-    const minutes =date.getMinutes();
-    let meridiem = hours > 12 ? "PM":"AM"
+    const minutes = date.getMinutes();
+    let meridiem = hours >= 12 ? "PM" : "AM";
 
-    if(hours > 12){
-        hours = hours - 12
+    if (hours > 12) {
+      hours = hours - 12;
     }
-    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${meridiem}`;
-
-    return formattedTime
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")} ${meridiem}`;
   }
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-  
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+  const formatDate = (dateArray) => {
+    const [year, month, day] = dateArray;
+    const date = new Date(year, month - 1, day);
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
   };
 
   function AllCollapseExample() {
@@ -82,12 +87,13 @@ function Event() {
                         </p>
                       </div>
                     </div>
-                    {user && (userRole === "admin" || user.id === event.userId) && (
-                      <div style={styles.accHeaderButtons}>
-                        <UpdateEvent eventID={event.id} />
-                        <DeleteEvent eventID={event.id} />
-                      </div>
-                    )}
+                    {user &&
+                      (userRole === "admin" || user.id === event.userId) && (
+                        <div style={styles.accHeaderButtons}>
+                          <UpdateEvent eventID={event.id} />
+                          <DeleteEvent eventID={event.id} />
+                        </div>
+                      )}
                   </div>
                 </Accordion.Header>
                 <Accordion.Body>
@@ -122,7 +128,7 @@ function Event() {
                         <div style={styles.accRow}>
                           <p style={styles.accBodTitle}>Club:</p>
                           <span style={{ marginLeft: "1vh" }}>
-                            {event.userId}
+                            {event.userId || "N/A"}
                           </span>
                         </div>
                         <div>
@@ -132,6 +138,14 @@ function Event() {
                           <p style={styles.accDescription}>
                             {event.description}
                           </p>
+                        </div>
+                        <div style={styles.accRow}>
+                          <p style={styles.accBodTitle}>Registrations:</p>
+                          <span style={{ marginLeft: "1vh" }}>
+                            {event.registrationIds
+                              ? event.registrationIds.length
+                              : 0}
+                          </span>
                         </div>
                       </div>
                     </div>
