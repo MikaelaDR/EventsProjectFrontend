@@ -3,8 +3,10 @@ import axios from "axios";
 import Footer from "../components/Footer";
 import "../App.css";
 import { useNavigate } from "react-router";
+import Alert from 'react-bootstrap/Alert';
 
 function Registration() {
+
   const [formData, setFormData] = useState({
     email: "",
     first_name: "",
@@ -36,19 +38,50 @@ function Registration() {
           },
         }
       );
-      alert(response.data);
-      navigate('/login');
+      setMessages(response.data);
+      setError("")
+      navigate('/login', {messages});
     } catch (error) {
       if (error.response) {
-        alert("Error: " + (error.response.data || "An error occurred"));
+        setError("Error: " + (error.response.data || "An error occurred"));
       } else if (error.request) {
-        alert("Error: No response received from server");
+        setError("Error: No response received from server");
       } else {
-        alert("Error: " + error.message);
+        setError("Error: " + error.message);
       }
     }
   };
 
+    //Error Handling outside of backend
+    const errorHandler= ()=>{
+        if (error== null){
+            setShowLoginAlert(false)
+        }
+        else if (formData.email =="" || formData.first_name=="" || formData.last_name==""){
+            setError('Error: Please fill in all fields.')
+            setShowLoginAlert(true)
+        }else setShowLoginAlert(true)
+    }
+
+    //Error Alert 
+    const [messages, setMessages] =useState("")
+    const[error, setError] = useState("")
+    const [showLoginAlert, setShowLoginAlert] = useState(false)
+
+  function LoginAlert(props) {
+    return (
+      <>
+          <Alert variant ="danger" >
+          <img
+                style={{width:'2.5vh', marginRight:'2vh'}}
+                src="./images/icons/x_icon.png"
+                alt="Green checkmark"
+            />
+            <span>{props.errors}</span>
+          </Alert>
+      </>
+    );
+  }
 
 
   return (
@@ -57,6 +90,7 @@ function Registration() {
         <div style={styles.mainSub}>
           <div style={styles.section1}>
             <div>
+                {/* LOGO */}
               <a href="/">
                 <img
                   style={styles.logo}
@@ -69,6 +103,11 @@ function Registration() {
               <h1 style={styles.title}>Let's get you connected!</h1>
             </div>
             <form onSubmit={handleSubmit}>
+            {
+                showLoginAlert? (<div style={{width:'90%', display:'flex', justifyContent:'center'}}>
+                <LoginAlert errors ={error}/>
+              </div>):null
+              }
               <div>
                 <input
                   style={styles.emailInput}
@@ -76,6 +115,7 @@ function Registration() {
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div style={styles.rowMe}>
@@ -85,6 +125,7 @@ function Registration() {
                   placeholder="First Name"
                   value={formData.firstName}
                   onChange={handleChange}
+                  required
                 />
                 <input
                   style={styles.input}
@@ -98,9 +139,10 @@ function Registration() {
                 <input
                   style={styles.input}
                   name="username"
-                  placeholder="Username"
+                  placeholder="Username/Club name"
                   value={formData.username}
                   onChange={handleChange}
+                  required
                 />
                 <input
                   style={styles.input}
@@ -109,6 +151,7 @@ function Registration() {
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div style={styles.rowMe}>
@@ -117,6 +160,7 @@ function Registration() {
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
+                  required
                 >
                   <option>Choose Role</option>
                   <option value="student">Student</option>
@@ -124,8 +168,10 @@ function Registration() {
                   <option value="admin">Admin</option>
                 </select>
               </div>
+              
+              
               <div style={styles.button1div}>
-                <button type="submit" style={styles.button1}>
+                <button type="submit" onClick={errorHandler} style={styles.button1}>
                   Register
                 </button>
               </div>

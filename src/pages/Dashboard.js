@@ -108,7 +108,7 @@ function Dashboard() {
             </div>
             <div style={styles.titleContainer}>
               <h1 style={styles.title}>
-                {user ? user.first_name : "User"}'s Events
+                {user ? user.first_name.toUpperCase() : "User"}'S EVENTS
               </h1>
             </div>
           </div>

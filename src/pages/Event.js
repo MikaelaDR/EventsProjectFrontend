@@ -9,6 +9,15 @@ import AddUserToEvent from "../modals/AddUserToEvent";
 import Accordion from "react-bootstrap/Accordion";
 import Pagination from "react-bootstrap/Pagination";
 
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  WhatsappShareButton,
+  EmailIcon,
+  FacebookIcon,
+  WhatsappIcon,
+} from "react-share";
+
 function Event() {
   const [user, setUser] = useState(null);
   const [events, setEvents] = useState([]);
@@ -16,6 +25,7 @@ function Event() {
   const [clubNames, setClubNames] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [eventsPerPage] = useState(3);
+  const currentPageUrl = "http://localhost:3000/events"
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
@@ -93,7 +103,10 @@ function Event() {
     const indexOfLastEvent = currentPage * eventsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
     const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
-
+    let join = "Join us for "
+    let at = " at "
+    let on = " on "
+    let signUp= ". Sign up at Humber Events: "
     return (
       <>
         {currentEvents.length === 0 ? (
@@ -109,10 +122,10 @@ function Event() {
                 <Accordion.Header>
                   <div style={styles.accHeaderContainer}>
                     <div style={styles.accHeaderContent}>
-                      <div>
+                      <div style={{flex:1}}>
                         <p style={styles.accHeaderText}>{event.title}</p>
                       </div>
-                      <div>
+                      <div style={{flex:1}}>
                         <p style={styles.accHeaderDate}>
                           {formatDate(event.startTime)}
                         </p>
@@ -128,6 +141,28 @@ function Event() {
                   </div>
                 </Accordion.Header>
                 <Accordion.Body>
+                  <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end'}}>
+                    <div style={{ padding: "5px" }}>
+                    <EmailShareButton url={join + event.title +at+ event.location +on+ formatDate(event.startTime) + signUp+ currentPageUrl }>
+                      <EmailIcon round={true} size={55} />
+                    </EmailShareButton>
+                  </div>
+
+                  <div style={{ padding: "5px" }}>
+                    <WhatsappShareButton 
+                    url={join + event.title +at+ event.location +on+ formatDate(event.startTime) + signUp+ currentPageUrl }
+                    hashtag="#HumberEvents #ConnectToday"
+                    >
+                      <WhatsappIcon round={true} size={55} />
+                    </WhatsappShareButton>
+                  </div>
+
+                  <div style={{ padding: "5px" }}>
+                    <FacebookShareButton url={join + event.title +at+ event.location +on+ formatDate(event.startTime) + signUp+ currentPageUrl }>
+                      <FacebookIcon round={true} size={55} />
+                    </FacebookShareButton>
+                  </div>
+            </div>
                   <div style={styles.accBod}>
                     <div style={styles.accRow}>
                       <div>
@@ -342,7 +377,7 @@ const styles = {
     fontSize: "3vh",
     justifyContent: "center",
     width: "60%",
-    marginBottom: "30vh",
+    marginBottom: "20vh",
   },
   imgs2: {
     height: "30vh",
@@ -380,6 +415,7 @@ const styles = {
     flexDirection: "row",
     justifyContent: "flex-end",
     width: "100%",
+    flex:1
   },
   addEventButtonContainer: {
     display: "flex",

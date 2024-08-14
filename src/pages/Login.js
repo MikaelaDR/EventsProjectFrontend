@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
 import { UserContext } from "../context/UserContext"; // Make sure this path is correct
+import MessageAlert from "../components/MessageAlert";
 
 function Login() {
   const navigate = useNavigate();
@@ -14,11 +15,15 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [showGoodAlert, setShowGoodAlert] = useState(false)
+  const[showBadAlert, setShowBadAlert] = useState(false)
 
   useEffect(() => {
     const successMessage = localStorage.getItem("registrationSuccess");
     if (successMessage) {
-      alert(successMessage);
+      setMessage(successMessage);
+      setShowGoodAlert(true)
       localStorage.removeItem("registrationSuccess");
     }
   }, []);
@@ -99,6 +104,10 @@ function Login() {
             </div>
 
             <form onSubmit={handleSubmit}>
+                {
+                 showGoodAlert? <MessageAlert variant="success" message={message}/> :null
+                }
+                
               <div>
                 <input
                   style={styles.inputs}
@@ -117,7 +126,8 @@ function Login() {
                 />
               </div>
               {errorMessage && (
-                <div style={styles.errorMessage}>{errorMessage}</div>
+                <div style={styles.errorMessage}><MessageAlert variant ="danger" message = {errorMessage}/>
+                </div>
               )}
               <div style={styles.button1div}>
                 <button type="submit" style={styles.button1}>
